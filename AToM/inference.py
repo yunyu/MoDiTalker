@@ -16,6 +16,7 @@ from model.model import MotionDecoder
 import torch.nn.functional as F
 import pdb
 import cv2
+import imageio
 
 import glob
 import argparse
@@ -111,10 +112,11 @@ def main(args):
             END = (it + 1) * HORIZON
 
             if it == 0:
-                cond_keypoint = np.load(os.path.join(args.data_root, "keypoints/face-centric/unposed/{name}/00000.npy"))
+                cond_keypoint = np.load(os.path.normpath(os.path.join(args.data_root, "..", f"keypoints/face-centric/unposed/{name}/00000.npy")))
                 # cond_keypoint = np.load(f"../data/inference/init_kpt/{name}.npy")
                 cond_keypoint = torch.from_numpy(cond_keypoint)
-                cond_keypoint = cond_keypoint[:, 0:1, :].to(device)
+                cond_keypoint = cond_keypoint.to(device)
+                # cond_keypoint = cond_keypoint[:, 0:1, :].to(device)
             else : #TODO
                 cond_keypoint = np.load(f"") 
             
@@ -163,8 +165,9 @@ def main(args):
 
             np.save(f"{frontalized_npy_save_dir}/atom_{str(it)}.npy", atom_out)
             # ------------------------- visualization------------------------------------------ #
-            frontalized_png_save_dir = os.path.join(args.save_dir, "frontalized_png", f"{name}")
-            os.makedirs(frontalized_png_save_dir, exist_ok=True)
+            frontalized_mp4_out_name = os.path.join(args.save_dir, f"frontalized_viz_{name}.mp4")
+            writer = imageio.get_writer(frontalized_mp4_out_name, fps = 25, format='FFMPEG', codec='h264')
+
             atom_out = (atom_out * 256 / 2 + 256 / 2).astype(int)
             for i_img in range(156):
                 vis_atom_out = atom_out[i_img, :, :2]
@@ -173,8 +176,8 @@ def main(args):
                     x, y = vis_atom_out[i]
                     img = cv2.circle(img, center=(x, y), radius=3, color=(0, 0, 0), thickness=-1)
                 img = cv2.flip(img, 0)
-                out_name = f"{frontalized_png_save_dir}/{str(it*HORIZON +i_img).zfill(3)}.png"
-                cv2.imwrite(out_name, img)
+                writer.append_data(img)
+            writer.close()
             # --------------------------------------------------------------------------------- #
 
             print(f"Done")
