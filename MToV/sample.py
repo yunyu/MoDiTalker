@@ -71,16 +71,8 @@ def save_image_grid(img, fname, drange, grid_size, normalize=True):
     assert C in [3]
 
     if C == 3:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         # pdb.set_trace()
         # torchvision.io.write_video(f'{fname[:-3]}mp4', torch.from_numpy(img), fps=16)
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
-=======
-        # pdb.set_trace()
-        # torchvision.io.write_video(f'{fname[:-3]}mp4', torch.from_numpy(img), fps=16)
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
         imgs = [PIL.Image.fromarray(img[i], "RGB") for i in range(len(img))]
         fname = fname.replace("generated", f"generated_gif")
         imgs[0].save(fname, quality=95, save_all=True, append_images=imgs[1:], duration=100, loop=0)
@@ -107,22 +99,12 @@ def save_image_at_folder(start_iter, img, fname, drange, grid_size, normalize=Tr
         imgs = [PIL.Image.fromarray(img[i], "RGB") for i in range(len(img))]
         cnt = 0
         for im in range(len(imgs)):
-<<<<<<< HEAD
-<<<<<<< HEAD
-            save_name = os.path.join(fname, f"{start_iter+cnt}".zfill(4) + ".png") 
-=======
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
             save_name = os.path.join(fname, f"{start_iter+cnt}".zfill(4) + ".png")
             # if os.path.exists(save_name):
             #     prev_img = PIL.Image.open(save_name)
             #     avg = Image.blend(prev_img, imgs[im], 1.0 / float(2))
             #     avg.save(save_name)
             # else:
-<<<<<<< HEAD
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
             imgs[im].save(save_name)
             cnt += 1
 
@@ -151,11 +133,6 @@ def _load_img_from_path(folder, fname):
     return img  # c h w
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
 # def get_ldmk_sequence(ldmk_id, num_frames):
 #     ldmk_path = f"/media/data/HDTF_preprocessed/30_frame_re/HDTF_dlib_landmark/{ldmk_id}"
 #     ldmk_list = os.listdir(ldmk_path)
@@ -183,10 +160,6 @@ def _load_img_from_path(folder, fname):
 
 #     return ldmk
 
-<<<<<<< HEAD
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
 
 start = time.time()
 
@@ -283,11 +256,7 @@ model = DiffusionWrapper(unet).to(device)
 # model = torch.nn.DataParallel(model, device_ids=[0])
 
 
-<<<<<<< HEAD
 # DDPM pre-trained load -------------------------------------------------------------------------- #
-=======
-# DDPM pre-trained 로드 어케함? --------------------------------------------------------------------------- #
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
 ema_model = copy.deepcopy(model)
 dir = args.second_model
 ema_model_ckpt = torch.load(dir)
@@ -318,21 +287,9 @@ else:
             eval_id_list = [line.replace("\n", "").replace(".mp4", "").strip() for line in lines]
         return eval_id_list
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    id_list_txt = "text_folders/train_id.txt"
-    train_list = load_train_id_list(id_list_txt)
-    DATA_LOCATION = "/media/data/HDTF_preprocessed/30_frame_re/HDTF" # HDTF folder pth
-=======
     diff_talk_txt = "text_folders/train_id.txt"
     train_list = load_train_id_list(diff_talk_txt)
     DATA_LOCATION = "/media/data/HDTF_preprocessed/30_frame_re/HDTF"
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
-=======
-    diff_talk_txt = "text_folders/train_id.txt"
-    train_list = load_train_id_list(diff_talk_txt)
-    DATA_LOCATION = "/media/data/HDTF_preprocessed/30_frame_re/HDTF"
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
     ldmk_owner_list = os.listdir(DATA_LOCATION)
     ldmk_owner_list = [
         ldmk_owner for ldmk_owner in ldmk_owner_list if ldmk_owner in train_list and ".txt" not in ldmk_owner and ".sh" not in ldmk_owner
@@ -389,11 +346,6 @@ for ldmk_owner in ldmk_owner_list:
             break
 
         with torch.no_grad():
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
             # if args.ref_img is None:
             # pers_frames = x[:k, :, :, :, :]
             # save ref with it in its name
@@ -401,10 +353,6 @@ for ldmk_owner in ldmk_owner_list:
             # image = [ref] * 16
 
             # torch.Size([4, 3, 16, 256, 256])
-<<<<<<< HEAD
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
-=======
->>>>>>> 0b794ceb5fdcf508ce955730a9aa9d5dd02dba8d
             x_ref = x_ref.to(device)
             x = x.to(device)
             x_l = x_l.to(device)
