@@ -11,6 +11,7 @@ import pdb
 import imageio
 import numpy as np
 import cv2
+import imageio
 import torch
 import argparse
 import torchvision.transforms as T
@@ -24,6 +25,7 @@ from face3d_helper import Face3DHelper
 from deep_3drecon.reconstructor import Reconstructor
 from deep_3drecon.util.preprocess import align_img
 from torchvision.utils import save_image
+from torchvision.transforms.functional import to_pil_image
 import einops
 import PIL
 from data_utils import *
@@ -315,13 +317,14 @@ def main(args):
     NUM_OF_FRAME = 75  
     NP_SAVE = f"{args.save_dir}/self-recon/aligned_npy"
     DATA_LOCATION=args.driv_video_path
-    OUTPUT_LOCATION = f"{args.save_dir}/self-recon/aligned_png"
+    OUTPUT_LOCATION = f"{args.save_dir}/self-recon/aligned_mp4"
     if args.id_list is None:
         id_list = os.listdir(args.driv_video_path)
     else:
         id_list = load_idlist(args.id_list)
         
-    id_list = ['WRA_JoePitts_000'] # e.g
+    # id_list = ['WRA_JoePitts_000'] # e.g
+    print(f"id_list: {id_list}")
     for id_ in tqdm(id_list, leave=False):
         atom_id = id_
         ps_drv_id = id_
@@ -340,12 +343,14 @@ def main(args):
             os.makedirs(os.path.join(OUTPUT_LOCATION, ps_drv_id), exist_ok=True)
             os.makedirs(os.path.join(NP_SAVE, ps_drv_id), exist_ok=True)
 
-            if atom_id not in os.listdir(OUTPUT_LOCATION):
-                os.mkdir(os.path.join(OUTPUT_LOCATION, ps_drv_id))
+            out_mp4_path = os.path.join(OUTPUT_LOCATION, ps_drv_id + ".mp4")
+            writer = imageio.get_writer(out_mp4_path, fps = 25, format='FFMPEG', codec='h264')
             for land_fr in land_vid:
-                save_image(land_fr / 255, os.path.join(OUTPUT_LOCATION, ps_drv_id, f"{str(str_index).zfill(5)}.png"))
+                # save_image(land_fr / 255, os.path.join(OUTPUT_LOCATION, ps_drv_id, f"{str(str_index).zfill(5)}.png"))
+                writer.append_data(np.array(to_pil_image(land_fr/255)))
                 np.save(os.path.join(NP_SAVE, ps_drv_id, f"{str(str_index).zfill(5)}.npy"), lm68_2d[str_index - index * NUM_OF_FRAME])
                 str_index += 1
+            writer.close()
 
 
 if __name__ == "__main__":
