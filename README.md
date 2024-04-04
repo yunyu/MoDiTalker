@@ -29,7 +29,7 @@ Seungryong Kim<sup>&dagger;1</sup>.
 conda create -n MoDiTalker python=3.8 -y
 conda activate MoDiTalker
 python -m pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
-python -m pip install natsort tqdm gdown omegaconf einops lpips pyspng tensorboard imageio av moviepy numba p_tqdm soundfile face_alignemnt
+python -m pip install natsort tqdm gdown omegaconf einops lpips pyspng tensorboard imageio av moviepy numba p_tqdm soundfile face_alignment transformers
 ```
 
 ## 2. Get ready to train models 

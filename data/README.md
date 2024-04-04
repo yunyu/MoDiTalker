@@ -85,12 +85,12 @@ python -m pip install natsort tqdm gdown omegaconf einops lpips pyspng tensorboa
 ```bash
 conda create -n preprocess python=3.9.16 -y
 conda activate preprocess
-conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch 
+conda install pytorch==1.13.1 cudatoolkit=11.7 torchvision torchaudio -c pytorch -c nvidia -c conda-forge
 conda install -c fvcore -c iopath -c conda-forge fvcore iopath -y
 conda install -c bottler nvidiacub -y
 conda install pytorch3d==0.7.4 -c pytorch3d -y
 conda install ffmpeg 
-python -m pip install face_alignment einops trimesh natsort
+python -m pip install face_alignment einops trimesh natsort kornia easydict
 ```
 
 ```bash 

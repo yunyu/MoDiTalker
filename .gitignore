@@ -1,0 +1,5 @@
+infer_frames
+checkpoints
+*.mp4
+__pycache__
+infer_media

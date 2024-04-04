@@ -101,7 +101,7 @@ def load_idlist(path):
 def main(args):
     model, diffusion, face3d_helper = prepare_models(args)
     if args.id_list is None : 
-        id_list = os.listdir(os.path.join(args.data_root, "frames"))
+        id_list = os.listdir(os.path.join(args.data_root))
     else:
         id_list = load_idlist(args.id_list)
     

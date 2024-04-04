@@ -267,7 +267,7 @@ if __name__ == "__main__":
     os.makedirs(os.path.join(saving_pth, 'non-face-centric'), exist_ok=True)
     os.makedirs(os.path.join(saving_pth, 'face-centric'), exist_ok=True)
     
-    iden_list = [iden for iden in os.listdir(hdtf_frames_path) if len(iden.split('_'))==3]
+    iden_list = [iden for iden in os.listdir(hdtf_frames_path)]
     
     frames_names = []
     for iden in iden_list:

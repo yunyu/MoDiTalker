@@ -84,7 +84,7 @@ if __name__ == "__main__":
     args.add_argument("--sampling_rate", type=int,
                       default=16000)
     args.add_argument("--device", type=str,
-                      default="cuda:5")
+                      default="cuda:0")
     
     ### for extracting hubert
     args.add_argument("--wav2vec_proc", type=str,
